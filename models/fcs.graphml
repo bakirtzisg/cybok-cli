@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+
+    <!-- Node attributes -->
+    <key id="device_name" for="node" attr.name="Device" attr.type="string"/>
+    <key id="entry_point" for="node" attr.name="Entry Points" attr.type="string"/>
+    <key id="os" for="node" attr.name="Operating System" attr.type="string"/>
+    <key id="hardware" for="node" attr.name="Hardware" attr.type="string"/>
+    <key id="firmware" for="node" attr.name="Firmware" attr.type="string"/>
+    <key id="software" for="node" attr.name="Software" attr.type="string"/>
+
+    <!-- Edge attributes -->
+    <key id="communication" for="edge" attr.name="Communication" attr.type="string"/>
+
+    <graph id="system" edgedefault="directed">
+        <!-- Nodes -->
+        <node id="Primary Application Processor">
+            <data key="device_name">ARM STM32F4</data>
+            <data key="os">ChibiOS RTOS</data>
+            <data key="firmware">I2C SPI UART SDIO low-level drivers</data>
+            <data key="software">Autopilot navigation control algorithms</data>
+            <data key="entry_point">N/A</data>
+        </node>
+
+        <node id="Differential Pressure Sensor">
+            <data key="device_name">MS4525DO</data>
+            <data key="entry_point">N/A</data>
+        </node>
+
+        <node id="Absolute Pressure Sensor">
+            <data key="device_name">MS4525DO</data>
+            <data key="entry_point">N/A</data>
+        </node>
+
+        <node id="Safety Switch Processor">
+            <data key="device_name">ARM STM32F0</data>
+            <data key="entry_point">N/A</data>
+        </node>
+
+        <node id="Accelerometer Gyroscope Magnetometer">
+            <data key="device_name">MPU 9150</data>
+            <data key="entry_point">N/A</data>
+        </node>
+
+        <node id="NMEA GPS">
+            <data key="device_name">Adafruit Ultimate GPS</data>
+            <data key="hardware">Mediatek MTK 3339 chipset</data>
+            <data key="firmware">I2C RS232 UART protocol drivers</data>
+            <data key="entry_point">GPS</data>
+        </node>
+
+        <node id="FCS Radio Module">
+            <data key="device_name">XBee</data>
+            <data key="hardware">XBee Pro 900MHz ISM</data>
+            <data key="entry_point">ZigBee</data>
+        </node>
+
+        <node id="GCS Radio Module">
+            <data key="device_name">XBee</data>
+            <data key="hardware">XBee Pro 900MHz ISM</data>
+            <data key="entry_point">ZigBee</data>
+        </node>
+
+        <node id="Imagery Radio Module">
+            <data key="device_name">XBee</data>
+            <data key="hardware">XBee Pro 900MHz ISM</data>
+            <data key="entry_point">ZigBee</data>
+        </node>
+
+        <node id="Imagery Application Processor">
+            <data key="device_name">Beaglebone Black</data>
+            <data key="entry_point">N/A</data>
+        </node>
+
+        <node id="Camera">
+            <data key="device_name">GoPro Hero5</data>
+            <data key="entry_point">N/A</data>
+        </node>
+
+        <node id="Laptop">
+            <data key="device_name">Dell Latitude E6420</data>
+            <data key="entry_point">Wi-Fi</data>
+        </node>
+
+        <node id="Control Surface">
+            <data key="device_name">Servos</data>
+            <data key="entry_point">N/A</data>
+        </node>
+
+        <!-- Edges -->
+        <edge source="Primary Application Processor" target="Differential Pressure Sensor" label="I2C">
+            <data key="communication">I2C Protocol</data>
+        </edge>
+
+        <edge source="Differential Pressure Sensor" target="Primary Application Processor" label="I2C">
+            <data key="communication">I2C Protocol</data>
+        </edge>
+
+        <edge source="Primary Application Processor" target="Absolute Pressure Sensor" label="I2C">
+            <data key="communication">I2C Protocol</data>
+        </edge>
+
+        <edge source="Absolute Pressure Sensor" target="Primary Application Processor" label="I2C">
+            <data key="communication">I2C Protocol</data>
+        </edge>
+
+        <edge source="Primary Application Processor" target="Safety Switch Processor" label="I2C">
+            <data key="communication">I2C Protocol</data>
+        </edge>
+
+        <edge source="Safety Switch Processor" target="Primary Application Processor" label="I2C">
+            <data key="communication">I2C Protocol</data>
+        </edge>
+
+        <edge source="Safety Switch Processor" target="Control Surface" label="I2C">
+            <data key="communication">Pulse Width Modulation PWM</data>
+        </edge>
+
+        <edge source="Primary Application Processor" target="Accelerometer Gyroscope Magnetometer" label="I2C">
+            <data key="communication">I2C Protocol</data>
+        </edge>
+
+        <edge source="Accelerometer Gyroscope Magnetometer" target="Primary Application Processor" label="I2C">
+            <data key="communication">I2C Protocol</data>
+        </edge>
+
+        <edge source="Primary Application Processor" target="NMEA GPS" label="I2C">
+            <data key="communication">I2C Protocol</data>
+        </edge>
+
+        <edge source="NMEA GPS" target="Primary Application Processor" label="I2C">
+            <data key="communication">I2C Protocol</data>
+        </edge>
+
+        <edge source="Primary Application Processor" target="FCS Radio Module" label="RS-232">
+            <data key="communication">RS-232 Protocol</data>
+        </edge>
+
+        <edge source="FCS Radio Module" target="Primary Application Processor" label="RS-232">
+            <data key="communication">RS-232 Protocol</data>
+        </edge>
+
+        <edge source="FCS Radio Module" target="GCS Radio Module" label="ZigBee">
+            <data key="communication">ZigBee IEEE 802.1.4 Protocol</data>
+        </edge>
+
+        <edge source="GCS Radio Module" target="FCS Radio Module" label="ZigBee">
+            <data key="communication">ZigBee IEEE 802.1.4 Protocol</data>
+        </edge>
+
+        <edge source="GCS Radio Module" target="Laptop" label="ZigBee">
+            <data key="communication">ZigBee IEEE 802.1.4 Protocol</data>
+        </edge>
+
+        <edge source="Laptop" target="GCS Radio Module" label="RS-232">
+            <data key="communication">RS-232 Protocol</data>
+        </edge>
+
+        <edge source="GCS Radio Module" target="Imagery Radio Module" label="ZigBee">
+            <data key="communication">ZigBee IEEE 802.1.4 Protocol</data>
+        </edge>
+
+        <edge source="Imagery Radio Module" target="GCS Radio Module" label="ZigBee">
+            <data key="communication">ZigBee IEEE 802.1.4 Protocol</data>
+        </edge>
+
+        <edge source="Imagery Radio Module" target="Imagery Application Processor" label="RS-232">
+            <data key="communication">RS-232 Protocol</data>
+        </edge>
+
+        <edge source="Imagery Application Processor" target="Imagery Radio Module" label="RS-232">
+            <data key="communication">RS-232 Protocol</data>
+        </edge>
+
+        <edge source="Imagery Application Processor" target="Camera" label="USB">
+            <data key="communication">USB Protocol</data>
+        </edge>
+    </graph>
+</graphml>

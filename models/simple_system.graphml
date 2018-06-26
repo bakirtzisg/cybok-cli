@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+                             http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+
+  <!-- Node attributes -->
+  <key id="attribute_os" for="node" attr.name="Operating System" attr.type="string"/>
+  <key id="attribute_device" for="node" attr.name="Device" attr.type="string"/>
+  <key id="attribute_hw" for="node" attr.name="Hardware" attr.type="string"/>
+  <key id="attribute_sw" for="node" attr.name="Software" attr.type="string"/>
+  <key id="attribute_com" for="node" attr.name="Communication" attr.type="string"/>
+  <key id="attribute_entry" for="node" attr.name="Entry Points" attr.type="string"/>
+
+  <!-- Edge attributes -->
+  <key id="attribute_data_type" attr.type="string" for="edge" attr.name="interaction"/>
+  <key id="attribute_data_cond" attr.type="string" for="edge" attr.name="interaction condition"/>
+
+  <graph id="graphml_export" edgedefault="directed">
+
+
+    <!-- Nodes -->
+    <node id="MCU">
+      <data key="attribute_os">Raspbian Debian for Raspberry Pi</data>
+      <data key="attribute_device">Raspberry Pi 2</data>
+      <data key="attribute_hw">Broadcomm BCM2836RIFBG 900Mhz quad-core ARM-Cortex-A7, Wi-Fi ethernet adapter</data>
+      <data key="attribute_sw">Python 2.7 implements sockets</data>
+      <data key="attribute_com">Internet Protocol IP address, Transmission Control Protocol TCP, sockets, 802.11s mesh network, Ethernet interface</data>
+      <data key="attribute_entry">Wi-Fi Adapter, GPS</data>
+    </node>
+
+    <node id="RCS">
+      <data key="attribute_os">Raspbian Debian for Raspberry Pi</data>
+      <data key="attribute_device">Raspberry Pi 2</data>
+      <data key="attribute_hw">Broadcomm BCM2836RIFBG 900Mhz quad-core ARM-Cortex-A7, Wi-Fi ethernet adapter</data>
+      <data key="attribute_sw">socket server, openStreetMaps jMapViewer version 2.3, Java 8</data>
+      <data key="attribute_com">Internet Protocol IP address, Transmission Control Protocol TCP, sockets, 802.11s mesh network, Ethernet interface</data>
+      <data key="attribute_entry">N/A</data>
+      <!-- an entry that produces no results for testing -->
+      <!-- <data key="attribute_entry">asdlkjasfd</data> -->
+    </node>
+
+    <!-- Edges -->
+    <edge source="RCS" target="MCU" label="Send MCU state request">
+      <data key="attribute_data_type">Send MCU state request</data>
+      <data key="attribute_data_cond">Encrypted strongSwan IPsec host-to-host tunnel with pre-shared keys </data>
+    </edge>
+    <edge source="MCU" target="RCS" label="Send RCS state">
+      <data key="attribute_data_type">Send RCS the state of the MCU</data>
+      <data key="attribute_data_cond">Encrypted strongSwan IPsec host-to-host tunnel with pre-shared keys </data>
+    </edge>
+  </graph>
+</graphml>

@@ -1,0 +1,103 @@
+#+html: <p align="center"><img src=".github/logo.png" width="460" /></p>
+#+html: <p align="center"><strong>CYBOK.</strong> A vulnerability assessment tool for model-based systems engineering.</p>
+
+** Getting started
+
+   CYBOK has been tested
+   with Python 3.6.4 on macOS and Windows 10.
+   You will need to use Python 3.6.4
+   or above because the code makes use
+   of the =NamedTuple= class.
+
+*** Python
+
+    For macOS we recommend installing =python3=
+    using [[https://brew.sh/][homebrew]].
+
+    #+BEGIN_SRC bash
+    brew install python3
+    #+END_SRC
+
+    For Windows we recommend installing =python3=
+    using [[https://chocolatey.org/][Chocolatey]].
+
+    #+BEGIN_SRC powershell
+    chocho install python3
+    #+END_SRC
+
+    (Note: Chocolatey installs =python3= as =python=.
+    This means that =pip3= now maps to =pip=.
+    To run cybok use =python cybok.py [options]=
+    instead of making the file executable
+    as with GNU/Linux and macOS.)
+
+*** Graphviz
+
+ One of the requirements to visualize graphs is =graphviz=.
+
+ For macOS:
+
+ #+BEGIN_SRC bash
+ brew install graphviz
+ #+END_SRC
+
+ For Windows:
+
+ #+BEGIN_SRC powershell
+ choco install graphviz --version 2.38
+ #+END_SRC
+
+*** CYBOK
+
+    To setup CYBOK download this repo
+    in your desired local folder.
+
+    #+BEGIN_SRC bash
+    git clone https://github.com/bakirtzisg/cybok.git
+    #+END_SRC
+
+    Install all python library requirements
+    from =requirements.txt=.
+
+    #+BEGIN_SRC bash
+    pip3 install -r requirements.txt
+    #+END_SRC
+
+    Before using CYBOK you will need run the =update= command.
+
+    #+BEGIN_SRC bash
+    $ python3 cybok --update
+    #+END_SRC
+
+    This downloads the latest CAPEC, CWE, and CVE feeds
+    and creates the search index.
+
+    🎉 🎉 🎉 🎉 🎉
+
+**** Quickstart
+
+     #+BEGIN_SRC bash
+     $ python3 cybok --help
+     $ python3 cybok --search gps
+     $ python3 cybok --input "./models/simple_system.graphml"
+     $ python3 cybok --visualize --input "./models/simple_system.graphml"
+     $ python3 cybok --visualize --input "./models/simple_system.graphml" --target "MCU"
+     $ python3 cybok --visualize --input "./models/fcs.graphml" --target "Primary Application Processor"
+     $ python3 cybok --input "./models/fcs.graphml" --output "fcs"
+     #+END_SRC
+
+** Implemented CLI Functionality
+
+   | Argument           | Type | Input                                  | Description                                                                                               |
+   |--------------------+------+----------------------------------------+-----------------------------------------------------------------------------------------------------------|
+   | ~-h~ ~--help~      | N/A  | N/A                                    | shows all available arguments                                                                             |
+   | ~-u~ ~--update~    | N/A  | N/A                                    | updates all available database data and creates search index                                              |
+   | ~-s~ ~--search~    | str  | search string                          | takes a string and matches to available database entries                                                  |
+   | ~-i~ ~--input~     | str  | model definition in [[http://graphml.graphdrawing.org/][GraphML]] form       | takes a =.graphml= file and produces a vulnerability report                                               |
+   | ~-v~ ~--visualize~ | N/A  | N/A                                    | creates visualizations for the attack surface and if given a target the exploit chains associated with it |
+   | ~-t~ ~--target~    | str  | vertex name in the system GraphML file | finds all possible exploit chains from any element in the attack surface to that vertex                   |
+   | ~-o~ ~--output~    | str  | filename or filepath                   | export all evidence from ~-s~ or ~-i~ to =.graphml= or =.csv= files                                       |
+
+** Authors
+
+   Georgios Bakirtzis (bakirtzisg@ieee.org) [[http://bakirtzis.net][bakirtzis.net]]
