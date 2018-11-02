@@ -19,7 +19,7 @@ if __name__ == "__main__":
             "lxml==4.2.1",
             "networkx==2.1",
             "whoosh==2.7.4",
-            "requests==2.13.0",
+            "requests==2.20.0",
             "sty==1.0.0b6",
             "matplotlib==2.2.2",
             "pygraphviz==1.3.1",
