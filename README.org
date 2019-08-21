@@ -33,7 +33,7 @@
 
 *** Graphviz
 
- One of the requirements to visualize graphs is =graphviz=.
+ To visualize graphs you will need to install =graphviz=.
 
  For macOS:
 
@@ -100,4 +100,4 @@
 
 ** Authors
 
-   Georgios Bakirtzis (bakirtzisg@ieee.org) [[http://bakirtzis.net][bakirtzis.net]]
+   Georgios Bakirtzis (bakirtzis@virginia.edu) [[http://bakirtzis.net][bakirtzis.net]]
