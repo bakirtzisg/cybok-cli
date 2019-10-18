@@ -1,6 +1,14 @@
 #+html: <p align="center"><img src=".github/logo.png" width="460" /></p>
 #+html: <p align="center"><strong>CYBOK.</strong> A vulnerability assessment tool for model-based systems engineering.</p>
 
+** About the paper
+
+  Georgios Bakirtzis, Brandon Simon, Aidan Collins, Cody Fleming, 
+  and Carl Elks, "Data-Driven Vulnerability Exploration 
+  for Design Phase System Analysis" [[https://ieeesystemsjournal.org/][IEEE Systems Journal]]
+  [[[https://ieeexplore.ieee.org/abstract/document/8850328/][proceedings]], [[https://arxiv.org/abs/1909.02923][preprint]]]
+
+
 ** Getting started
 
    CYBOK has been tested
