@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+
+  <!-- Node attributes -->
+  <key id="attribute_entry" attr.name="Entry Point" attr.type="string" for="node"/>
+  <key id="attribute_sw" attr.name="Software" attr.type="string" for="node" />
+  <key id="attribute_hw" attr.name="Hardware" attr.type="string" for="node" />
+  <key id="attribute_fw" attr.name="Firmware" attr.type="string" for="node" />
+  <key id="attribute_os" attr.name="Operating System" attr.type="string" for="node"  />
+  <key id="attribute_device" attr.name="Device" attr.type="string" for="node" />
+
+  <!-- Edge attributes -->
+  <key id="C1" attr.type="string" for="edge" attr.name="Network"/>
+  <key id="C2" attr.type="string" for="edge" attr.name="Network"/>
+  <key id="C3" attr.type="string" for="edge" attr.name="Network"/>
+  <key id="C4" attr.type="string" for="edge" attr.name="GSM"/>
+  <key id="C5" attr.type="string" for="edge" attr.name="Corporate Network"/>
+  <key id="C6" attr.type="string" for="edge" attr.name="Control Network"/>
+  
+  
+  <graph id="graphml_export" edgedefault="directed">
+
+    <!-- Nodes -->
+    <node id="Corporate Headquarters">
+      <data key="attribute_hw">Remote Administrative Access</data>
+    </node>
+
+    <node id="RD Facility">
+      <data key="attribute_entry">Supply Chain</data>
+    </node>
+
+    <node id="Cloud">
+      <data key="attribute_sw">Microsoft Azure</data>
+    </node>
+
+    <node id="Modem">
+      <data key="attribute_fw">GSM</data>
+    </node>
+
+    <node id="Corporate Firewall">
+      <data key="attribute_hw">Cisco ASA</data>
+    </node>
+
+    <node id="On-site Corporate Computer">
+      <data key="attribute_os">Windows 7</data>
+      <data key="attribute_sw">Microsoft Outlook</data>
+      <data key="attribute_sw">Google Chrome</data>
+    </node>
+
+    <node id="Control Firewall">
+      <data key="attribute_hw">Cisco ASA</data>
+    </node>
+    
+    <node id="Programming WS">
+      <data key="attribute_os">Windows 7</data>
+      <data key="attribute_sw">Labview</data>
+    </node>
+
+    <node id="SIS">
+      <data key="attribute_hw">NI cRIO 9063</data>
+      <data key="attribute_os">NI RT Linux OS</data>
+    </node>
+
+    <node id="BPCS">
+      <data key="attribute_hw">NI cRIO 9064</data>
+      <data key="attribute_os">NI RT Linux OS</data>
+    </node>
+
+    <node id="Temperature Sensor">
+      <data key="attribute_hw">AP9335T</data>
+    </node>
+
+    <node id="Centrifuge">
+      <data key="attribute_hw">P-1 Centrifuge</data>
+    </node>
+
+    <node id="Interaction PC">
+      <data key="attribute_os">Windows 7</data>
+    </node>
+
+
+
+    <!-- Edges -->
+    <edge source="RD Facility" target="Cloud">
+      <data key="C1">LAN</data>
+    </edge>
+
+    <edge source="Corporate Headquarters" target="Cloud">
+      <data key="C2">LAN</data>
+    </edge>
+
+    <edge source="Cloud" target="R&amp;D Facility">
+      <data key="C1">LAN</data>
+    </edge>
+    <edge source="Cloud" target="Corporate Headquarters">
+      <data key="C2">LAN</data>
+    </edge>
+    <edge source="Cloud" target="Modem">
+      <data key="C3">LAN</data>
+    </edge>
+
+    <edge source="Modem" target="Cloud">
+      <data key="C3">LAN</data>
+    </edge>
+    <edge source="Modem" target="Corporate Firewall">
+      <data key="C4">Network</data>
+    </edge>
+
+    <edge source="Corporate Firewall" target="Modem">
+      <data key="C4">Network</data>
+    </edge>
+    <edge source="Corporate Firewall" target="On-Site Corporate Computer">
+      <data key="C5">Corporate Network</data>
+    </edge>
+    <edge source="Corporate Firewall" target="Control Firewall">
+      <data key="C5"> Corporate Network</data>
+    </edge>
+
+    <edge source="On-site Corporate Computer" target="Control Firewall">
+      <data key="C5">Corporate Network</data>
+    </edge>
+    <edge source="On-site Corporate Computer" target="Corporate Firewall">
+      <data key="C5">Corporate Network</data>
+    </edge>
+
+    <edge source="Control Firewall" target="Corporate Firewall">
+      <data key="C5">Corporate Network</data>
+    </edge>
+    <edge source="Control Firewall" target="On-Site Corporate Computer">
+      <data key="C5">Corporate Network</data>
+    </edge>
+    <edge source="Control Firewall" target="Programming WS">
+      <data key="C6">Control Network</data>
+    </edge>
+    <edge source="Control Firewall" target="SIS">
+      <data key="C6">Control Network</data>
+    </edge>
+    <edge source="Control Firewall" target="BPCS">
+      <data key="C6">Control Network</data>
+    </edge>
+
+    <edge source="Programming WS" target="Control Firewall">
+      <data key="C6">Control Network</data>
+    </edge>
+    <edge source="Programming WS" target="SIS">
+      <data key="C6">Control Network</data>
+    </edge>
+    <edge source="Programming WS" target="BPCS">
+      <data key="C6">Control Network</data>
+    </edge>
+
+    <edge source="SIS" target="Programming WS">
+      <data key="C6">Control Network</data>
+    </edge>
+    <edge source="SIS" target="Control Firewall">
+      <data key="C6">Control Network</data>
+    </edge>
+    <edge source="SIS" target="PBCS">
+      <data key="C6">Control Network</data>
+      <data key="C7">MODBUS over Ethernet</data>
+    </edge>
+    <edge source="SIS" target="Temperature Sensor">
+      <data key="C7">MODBUS over Ethernet</data>
+    </edge>
+    <edge source="SIS" target="Centrifuge">
+      <data key="C7">MODBUS over Ethernet</data>
+    </edge>
+    <edge source="SIS" target="Interaction PC">
+      <data key="C7">MODBUS over Ethernet</data>
+    </edge>
+
+    <edge source="BPCS" target="Programming WS">
+      <data key="C6">Control Network</data>
+    </edge>
+    <edge source="BPCS" target="Control Firewall">
+      <data key="C6">Control Network</data>
+    </edge>
+    <edge source="BPCS" target="SIS">
+      <data key="C6">Control Network</data>
+      <data key="C7">MODBUS over Ethernet</data>
+    </edge>
+    <edge source="BPCS" target="Temperature Sensor">
+      <data key="C7">MODBUS over Ethernet</data>
+    </edge>
+    <edge source="BPCS" target="Centrifuge">
+      <data key="C7">MODBUS over Ethernet</data>
+    </edge>
+    <edge source="BPCS" target="Interaction PC">
+      <data key="C7">MODBUS over Ethernet</data>
+    </edge>
+
+    <edge source="Temperature Sensor" target="BPCS">
+      <data key="C7">MODBUS over Ethernet</data>
+    </edge>
+    <edge source="Temperature Sensor" target="SIS">
+      <data key="C7">MODBUS over Ethernet</data>
+    </edge>
+    <edge source="Temperature Sensor" target="Centrifuge">
+      <data key="C7">MODBUS over Ethernet</data>
+    </edge>
+    <edge source="Temperature Sensor" target="Interaction PC">
+      <data key="C7">MODBUS over Ethernet</data>
+    </edge>
+
+    <edge source="Centrifuge" target="BPCS">
+      <data key="C7">MODBUS over Ethernet</data>
+    </edge>
+    <edge source="Centrifuge" target="SIS">
+      <data key="C7">MODBUS over Ethernet</data>
+    </edge>
+    <edge source="Centrifuge" target="Temperature Sensor">
+      <data key="C7">MODBUS over Ethernet</data>
+    </edge>
+    <edge source="Centrifuge" target="Interaction PC">
+      <data key="C7">MODBUS over Ethernet</data>
+    </edge>
+
+    <edge source="Interaction PC" target="BPCS">
+      <data key="C7">MODBUS over Ethernet</data>
+    </edge>
+    <edge source="Interaction PC" target="SIS">
+      <data key="C7">MODBUS over Ethernet</data>
+    </edge>
+    <edge source="Interaction PC" target="Temperature Sensor">
+      <data key="C7">MODBUS over Ethernet</data>
+    </edge>
+    <edge source="Interaction PC" target="Centrifuge">
+      <data key="C7">MODBUS over Ethernet</data>
+    </edge>
+    
+  </graph>
+</graphml>
