@@ -8,14 +8,13 @@
   for Design Phase System Analysis" [[https://ieeesystemsjournal.org/][IEEE Systems Journal]]
   [[[https://ieeexplore.ieee.org/abstract/document/8850328/][proceedings]], [[https://arxiv.org/abs/1909.02923][preprint]]]
 
-
 ** Getting started
 
    CYBOK has been tested
-   with Python 3.6.4 on macOS and Windows 10.
-   You will need to use Python 3.6.4
+   with Python 3.7.5 on macOS and Windows 10.
+   You will need to use Python 3.7.1
    or above because the code makes use
-   of the =NamedTuple= class.
+   of the =NamedTuple= class and =f-strings=.
 
 *** Python
 

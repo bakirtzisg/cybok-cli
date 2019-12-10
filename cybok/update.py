@@ -7,7 +7,6 @@ import shutil
 import requests
 import os
 
-
 def download_and_unzip(url):
     """Downloads and unzips a file.
 
@@ -17,6 +16,7 @@ def download_and_unzip(url):
        Returns:
          unzipped data file in the current directory.
     """
+    print(url)
     r = requests.get(url)
     z = zipfile.ZipFile(io.BytesIO(r.content))
     return z.extractall()
@@ -38,7 +38,7 @@ def update_cwe():
     shutil.move("2000.xml", "./data/CWE.xml")
 
 
-def update_cve():
+def update_cve_old():
     """Gets latest CVE.xml file and moves it to ../data.
        This is handled differently than CAPEC
        and CWE because the file is not available
@@ -81,3 +81,37 @@ def update_cve():
             os.remove('./data/%s.gz' % name)
     except:
         print("Files do not exist and therefore cannot be removed")
+
+def update_cve(cve_loc="./data/"):
+    cve_base = 'https://nvd.nist.gov/feeds/json/cve/1.1/'
+    cve_suffix = ".zip"
+    cve_links = {
+        'CVE-Modified': 'nvdcve-1.1-modified.json',
+        'CVE-Recent': 'nvdcve-1.1-recent.json',
+        'CVE-2002': 'nvdcve-1.1-2002.json',
+        'CVE-2003': 'nvdcve-1.1-2003.json',
+        'CVE-2004': 'nvdcve-1.1-2004.json',
+        'CVE-2005': 'nvdcve-1.1-2005.json',
+        'CVE-2006': 'nvdcve-1.1-2006.json',
+        'CVE-2007': 'nvdcve-1.1-2007.json',
+        'CVE-2008': 'nvdcve-1.1-2008.json',
+        'CVE-2009': 'nvdcve-1.1-2009.json',
+        'CVE-2010': 'nvdcve-1.1-2010.json',
+        'CVE-2011': 'nvdcve-1.1-2011.json',
+        'CVE-2012': 'nvdcve-1.1-2012.json',
+        'CVE-2013': 'nvdcve-1.1-2013.json',
+        'CVE-2014': 'nvdcve-1.1-2014.json',
+        'CVE-2015': 'nvdcve-1.1-2015.json',
+        'CVE-2016': 'nvdcve-1.1-2016.json',
+        'CVE-2017': 'nvdcve-1.1-2017.json',
+        'CVE-2018': 'nvdcve-1.1-2018.json',
+        'CVE-2019': 'nvdcve-1.1-2019.json'
+    }
+    cves = []
+    for cve_name, cve_file in cve_links.items():
+        print("Downloading "+cve_file+".zip")
+        download_and_unzip("{}{}{}".format(cve_base, cve_file, cve_suffix))
+        cf = "{}{}.json".format(cve_loc,cve_name)
+        shutil.move(cve_file, cf)
+        cves.append(cf)
+    return cves

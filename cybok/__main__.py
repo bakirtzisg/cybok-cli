@@ -5,6 +5,7 @@ import argparse
 import sys
 import matplotlib.pyplot as plt
 import copy
+from sty import fg, rs
 import networkx as nx
 import csv
 
@@ -80,15 +81,10 @@ def main(args):
         violated_components = find_violated_components(sigma)
 
         if args.output:
-            print("Exporting system topology")
             nx.write_graphml(sigma, args.output + "_system_topology.graphml")
-
-            print("Exporting attack vector graph")
             av_graph = attack_vector_graph(violated_components)
-
             nx.write_graphml(av_graph, args.output + "_attack_vector_graph.graphml")
 
-            print("Exporting full vulnerability analysis")
             with open(args.output + '_' + "full_analysis.csv", "w") as results_file:
                 writer = csv.writer(results_file)
                 writer.writerow(('Violated Component', 'Hits for Component', 'Attack Vector', 'Database', 'ID',
@@ -97,7 +93,8 @@ def main(args):
                 for violated_component in violated_components:
                     violated_component[1] = rank_results(violated_component[1])
                     for piece in violated_component[1]:
-                        writer.writerow((violated_component[0],
+                        try:
+                            writer.writerow((violated_component[0],
                                          piece[1],
                                          piece[0].name,
                                          piece[0].db_name,
@@ -106,6 +103,8 @@ def main(args):
                                          piece[0].related_attack_pattern,
                                          piece[0].related_vulnerability,
                                          piece[0].contents))
+                        except:
+                            print("Error [1]")
 
             as_sigma = copy.deepcopy(sigma)
             attack_surface, evidence = find_attack_surface(as_sigma)
@@ -114,20 +113,18 @@ def main(args):
             if attack_surface == []:
                 print("I could not find any entry points in the system. This does not mean there are not any.")
             else:
-                print("Exporting attack surface")
                 nx.write_graphml(as_graph, args.output + "_attack_surface_graph.graphml")
 
                 with open(args.output + '_' + "_attack_surface_evidence.csv", "w") as results_file:
                     writer = csv.writer(results_file)
-                    writer.writerow(('Attack Surface Source', 'Attack Surface Target',
-                                     'Attack Vector', 'Database', 'ID', 'Related CWE',
-                                     'Related CAPEC', 'Related CVE', 'Contents'))
-
+                    writer.writerow(('Attack Surface Elements', 'Attack Vector', 'Database', 'ID',
+                                     'Related CWE', 'Related CAPEC', 'Related CVE', 'Contents'))
                     for violated_component in attack_surface:
+                        as_element = violated_component[1] + " -> " + violated_component[0]
                         for piece in evidence:
                             if piece[0] == violated_component[0]:
-                                writer.writerow((violated_component[1],
-                                                 violated_component[0],
+                                try:
+                                    writer.writerow((as_element,
                                                  piece[1].name,
                                                  piece[1].db_name,
                                                  piece[1].db_id,
@@ -135,6 +132,8 @@ def main(args):
                                                  piece[1].related_attack_pattern,
                                                  piece[1].related_vulnerability,
                                                  piece[1].contents))
+                                except:
+                                    print("Error [2]")
         else:
             # searches each component's descriptors for vulnerabilities
             print("\n\rFull system analysis")
@@ -168,7 +167,7 @@ def main(args):
                 print("I could not find any entry points in the system. This does not mean there are not any.")
             else:
                 for violated_component in attack_surface:
-                    pprint_component(violated_component[1] + " ↦ " + violated_component[0])
+                    pprint_component(violated_component[1] + " -> " + violated_component[0])
                     for piece in evidence:
                         if piece[0] == violated_component[0]:
                             if args.abstract:
@@ -194,7 +193,7 @@ def main(args):
                             chain += str(element)
                             first = False
                         else:
-                            chain +=  " ↦ " + str(element)
+                            chain +=  " -> " + str(element)
                         print(chain)
                         chain = ""
 
@@ -209,26 +208,25 @@ def main(args):
 
 
     if args.update:
-        print("Updating MITRE CAPEC")
+        print("Updating MITRE CAPEC\n", flush=True)
         update_capec()
-        print("Updated MITRE CAPEC")
+        print("Updated MITRE CAPEC\n", flush=True)
 
-        print("Updating MITRE CWE")
+        print("Updating MITRE CWE\n", flush=True)
         update_cwe()
-        print("Updated MITRE CWE")
+        print("Updated MITRE CWE\n", flush=True)
 
-        print("Updating NVD CVE")
+        print("Updating NVD CVE\n", flush=True)
         update_cve()
-        print("Updated NVD CVE\n\r")
+        print("Updated NVD CVE\n", flush=True)
 
-        print("Parsing attack vectors")
+        print("Parsing attack vectors\n\r", flush=True)
         attack_vectors = attack_vector_cross()
         print("I found %d attack vectors.\n\r" % len(attack_vectors))
 
-        print("Creating search index, this might take a while")
+        print("Creating search index, this might take a while\n\r", flush=True)
         create_index(attack_vectors)
-        print("Created search index")
-
+        print("Created search index\n\r", flush=True)
 
 if __name__ == "__main__":
     main(sys.argv[1:])

@@ -2,7 +2,7 @@
 
 from bs4 import BeautifulSoup
 from typing import NamedTuple
-
+import json
 
 class AttackVector(NamedTuple):
     """Generic data structure
@@ -200,14 +200,30 @@ def extract_capec():
     return attack_pattern_lst
 
 
-def cve_related_weaknesses(entry):
-    """Checks if a related CWE exists.
-    """
-    if entry.find("vuln:cwe") == None:
-        return 'N/A'
-    else:
-        return entry.find("vuln:cwe")["id"]
+def get_cve_entries(cve_json):
+    try:
+        with open(cve_json, "r") as cve:
+            cve_data = json.load(cve)
+            return cve_data["CVE_Items"]
+    except:
+        return []
 
+def parse_cve_relationships(problemtype_data):
+    cwes = []
+    for ptdata in problemtype_data:
+        if "description" in ptdata:
+            #if isinstance(item, str):
+            #    print(problemtype_data)
+            #    continue
+            for desc in ptdata["description"]:
+                cwes.append(desc["value"])
+    return cwes
+
+def parse_desc_data(desc_data):
+    ds = ""
+    for desc in desc_data:
+        ds += desc["value"]
+    return ds
 
 def extract_cve():
     """Extract CVE entries
@@ -217,31 +233,29 @@ def extract_cve():
        constructs the set V,
        of all vulnerabilities.
     """
-    cve_data = ['CVE-Modified.xml', 'CVE-Recent.xml',
-                'CVE-2002.xml', 'CVE-2003.xml',
-                'CVE-2004.xml', 'CVE-2005.xml',
-                'CVE-2006.xml', 'CVE-2007.xml',
-                'CVE-2008.xml', 'CVE-2009.xml',
-                'CVE-2010.xml', 'CVE-2011.xml',
-                'CVE-2012.xml', 'CVE-2013.xml',
-                'CVE-2014.xml', 'CVE-2015.xml',
-                'CVE-2016.xml', 'CVE-2017.xml',
-                'CVE-2018.xml']
+    cve_data = ['CVE-Modified.json', 'CVE-Recent.json',
+                'CVE-2002.json', 'CVE-2003.json',
+                'CVE-2004.json', 'CVE-2005.json',
+                'CVE-2006.json', 'CVE-2007.json',
+                'CVE-2008.json', 'CVE-2009.json',
+                'CVE-2010.json', 'CVE-2011.json',
+                'CVE-2012.json', 'CVE-2013.json',
+                'CVE-2014.json', 'CVE-2015.json',
+                'CVE-2016.json', 'CVE-2017.json',
+                'CVE-2018.json']
 
     vulnerability_lst = []
     for cve_datum in cve_data:
-        with open("./data/%s" % cve_datum, encoding='utf8') as infile:
-            soup = BeautifulSoup(infile, "xml")
-
-        vulnerabilities = soup.find_all("entry")
-        for entry in vulnerabilities:
-            vulnerability_lst.append(AttackVector(db_id=entry["id"][4:],
+        entries = get_cve_entries("./data/"+cve_datum)
+        
+        for entry in entries:
+            vulnerability_lst.append(AttackVector(db_id=entry["cve"]["CVE_data_meta"]["ID"][4:],
                                                   db_name="CVE",
-                                                  name=entry["id"],
-                                                  related_weakness=cve_related_weaknesses(entry),
+                                                  name=entry["cve"]["CVE_data_meta"]["ID"],
+                                                  related_weakness=parse_cve_relationships(entry["cve"]["problemtype"]["problemtype_data"]),
                                                   related_attack_pattern=["N/A"],
                                                   related_vulnerability=["N/A"],
-                                                  contents=entry.find("vuln:summary").text))
+                                                  contents=parse_desc_data(entry["cve"]["description"]["description_data"])))
 
     return vulnerability_lst
 
@@ -254,10 +268,15 @@ def attack_vector_cross():
        it constructs A × W × V.
     """
 
+    print("Extract CAPEC\n", flush = True)
     # Constructs set of attack patterns, A
     A = extract_capec()
+
+    print("Extract CWE\n", flush = True)
     # Constructs set of weaknesses, W
     W = extract_cwe()
+    
+    print("Extract CVE\n", flush = True)
     # Constructs set of vulnerabilities, V
     V = extract_cve()
 
