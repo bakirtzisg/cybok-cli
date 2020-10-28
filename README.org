@@ -1,13 +1,17 @@
 #+html: <p align="center"><img src=".github/logo.png" width="460" /></p>
 #+html: <p align="center"><strong>CYBOK.</strong> A vulnerability assessment tool for model-based systems engineering.</p>
 
-** About the paper
+** About the papers
 
   Georgios Bakirtzis, Brandon Simon, Aidan Collins, Cody Fleming, 
   and Carl Elks, "Data-Driven Vulnerability Exploration 
   for Design Phase System Analysis" [[https://ieeesystemsjournal.org/][IEEE Systems Journal]]
   [[[https://ieeexplore.ieee.org/abstract/document/8850328/][proceedings]], [[https://arxiv.org/abs/1909.02923][preprint]]]
-
+  
+  /Rationale/. Georgios Bakirtzis, Garrett Ward, Christopher Deloglos, Carl Elks, Barry Horowitz, 
+  and Cody Fleming, "Fundamental Challenges of Cyber-Physical Systems Security Modeling" [[https://dsn2020.webs.upv.es/][IEEE/IFIP DSN 2020]]
+  [[[https://ieeexplore.ieee.org/document/9159140][proceedings]], [[https://arxiv.org/abs/2005.00043][preprint]]]
+  
 ** Getting started
 
    CYBOK has been tested
