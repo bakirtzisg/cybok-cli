@@ -16,7 +16,7 @@ if __name__ == "__main__":
         long_description=open('README.org').read(),
         install_requires=[
             "beautifulsoup4==4.6.0",
-            "lxml==4.2.1",
+            "lxml==4.6.2",
             "networkx==2.1",
             "whoosh==2.7.4",
             "requests==2.20.0",
